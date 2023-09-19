@@ -15,7 +15,7 @@ return token ? token.replace('Bearer ',''):null
 getUserId:(authentication)=>{
     let userid=-1
     let token =module.exports.parseAuth(authentication)
-    
+    console.log(token);
     if(token!=null){
         try {
          jwt.verify(token,secrete,(err,good)=>{
@@ -43,7 +43,7 @@ getUserId:(authentication)=>{
            console.log(err);
         }
     }else{
-        res.send({err:"you are not authenticated bitch"})
+        console.log({err:"you are not authenticated bitch"})
     }
 },
 runPromt:async (Ques)=>{

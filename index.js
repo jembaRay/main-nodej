@@ -8,6 +8,8 @@ const cors=require('cors')
 const ip=process.env.ip
 const user=require('./Route_controllers/Auth_controller')
 const gen=require("./Route_controllers/ON_gen")
+const genko=require('./Route_controllers/genKon')
+const siadas=require("./Route_controllers/siaDash")
 app.use(parser.urlencoded({extended:true}))
 app.use(parser.json())
 app.use(exp.json())
@@ -20,6 +22,9 @@ app.use(cors(
 mong.connect('mongodb://localhost:27017/project').then(()=>{
         console.log('connected to project');
 })
+
+app.use('/',genko) 
+app.use('/',siadas)
 app.use('/',user)
 app.use('/',gen)
 app.listen(5000,ip,(req,res)=>{

@@ -75,16 +75,18 @@ router.post("/Login",(req,res)=>{
     if(Email==""||Password==""){
         return res.send({err:'empty field'})
     }
+    console.log({Email,Password});
     user.findOne({Email}).then((users)=>{
         if (users){
             bcrypt.compare(Password,users.Password,(err,good)=>{   
                 if (good) {
                     let access_token=token.generateToken(users)
+                    console.log(access_token);
                   return  res.status(200).send({good:users,accesstoken:access_token}) 
                 }else{
                     return res.send({err:"Wrong pass"})
                 }
-            })
+            }) 
         }else{
             console.log("nothing");
         }

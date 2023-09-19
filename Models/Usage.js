@@ -1,6 +1,6 @@
 const mong=require('mongoose')
 
-
+ 
 const Usage=new mong.Schema({
     state:{
         type:Number,

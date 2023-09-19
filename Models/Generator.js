@@ -11,7 +11,7 @@ baseTemp:{
     required:true
 },
 PowerOutPut:{
-    type:Number,
+    type:String,
     required:true
 },
 GenKonnectID:{
@@ -20,7 +20,7 @@ GenKonnectID:{
     required:true
 },
 status:{
-    type:Numbers,
+    type:Number,
     default:0
 }
 })
