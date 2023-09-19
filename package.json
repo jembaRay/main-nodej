@@ -1,0 +1,27 @@
+{
+  "name": "main-nodej",
+  "version": "1.0.0",
+  "description": "for my defence",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon"
+  },
+  "keywords": [
+    "npm",
+    "run"
+  ],
+  "author": "raymond and pelayah",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.2",
+    "nodemon": "^2.0.22",
+    "openai": "^4.0.1",
+    "twilio": "^4.15.0"
+  }
+}

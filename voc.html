@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="startButton" >chat</button><br>
+    <textarea name="" id="output" cols="30" rows="10"></textarea>
+</body>
+</html>
+<script>
+    // Vérifier la compatibilité avec l'API Web Speech
+if ('webkitSpeechRecognition' in window) {
+  // Créer une instance de reconnaissance vocale
+  const recognition = new webkitSpeechRecognition();
+
+  // Paramètres de la reconnaissance vocale
+  recognition.continuous = false; // Stopper la reconnaissance après une phrase
+  recognition.lang = 'fr-FR'; // Langue utilisée (français)
+
+  // Événement déclenché lorsqu'un résultat vocal est disponible
+  recognition.onresult = function(event) {
+    const result = event.results[0][0].transcript; // Récupérer le texte transcrit
+
+    // Traiter la commande vocale
+    console.log('Commande vocale détectée:', result);
+    // Ajoutez ici votre logique pour traiter la commande vocale
+
+    // Exemple : Afficher la commande vocale dans une zone de texte
+    document.getElementById('output').value = result;
+  };
+
+  // Démarrer la reconnaissance vocale en réponse à un événement (par exemple, un clic de bouton)
+  document.getElementById('startButton').addEventListener('click', function() {
+    recognition.start();
+  });
+} else {
+  console.log('API Web Speech non prise en charge');
+}
+</script>
+<style>
+#startButton{
+        width: 10%;
+        height: 10%;
+}
+</style>
+\
