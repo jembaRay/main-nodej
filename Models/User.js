@@ -6,6 +6,11 @@ const User=new mong.Schema({
         required:true,
         unique:true,
     },
+    Last_name:{
+        type:String,
+        required:true,
+        unique:true
+    },
     Email:{
         type:String,
         required:true,
