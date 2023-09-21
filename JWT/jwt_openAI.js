@@ -6,7 +6,7 @@ generateToken:(user)=>{
     return jwt.sign({
         id:user.id,
         First_name:user.First_name
-    },secrete,{expiresIn:"1h"})
+    },secrete)
 },
 parseAuth:(token)=>{
 return token ? token.replace('Bearer ',''):null

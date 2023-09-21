@@ -18,14 +18,15 @@ console.log(state);
     })
 
 })
-router.get('/getchange',(req,res)=>{
-
-    usage.find().then((f)=>{
-        if (f) {
+router.get('/getchange/:val',(req,res)=>{
+let {val}=req.params
+console.log(val);
+    // usage.find().then((f)=>{
+    //     if (f) {
             
-            return res.send({"state":f[0].state})
-        }
-    })
+    //         return res.send({"state":f[0].state})
+    //     }
+    // })
 })
 
 
