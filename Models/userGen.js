@@ -7,7 +7,7 @@ userId:{
     required:true
 },
 GenKonId:[{
-        genId:{
+        genId:{ 
     type:mong.Types.ObjectId,
     ref:'Generator',
     required:true

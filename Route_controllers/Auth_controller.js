@@ -32,45 +32,66 @@ const token=require('../JWT/jwt_openAI')
 // // 502 Bad Gateway: The server acting as a gateway received an invalid response from an upstream server.
 // // 503 Service Unavailable: The server is temporarily unable to handle the request.
 // // 504 Gateway Timeout: The server acting as a gateway did not receive a timely response from an upstream server.
-router.post('/register',(req,res)=>{
-   const{First_name,Last_name,Email,Telephone,Password,confirmPass}=req.body;
-
-   if (First_name==""||Last_name==""||Email==""||Telephone==""||Password=="") {
-       return res.status(400).send("a column is empty please chek out")
-   }
-   if(Password!==confirmPass){
-      return res.status(400).send("not the same password")
-   }
-   
-   if (Email.length <= 6) {
-    res.status(500).send({err:`Email ${Email} is shorter than the minimum allowed length (6)`}) 
-   }
-   if (typeof(Telephone)!== 'number'){
-    res.status(500).send({err:'No strings on telephone please'})
-   }
-
-    user.findOne({First_name,Last_name,Email,Telephone}).then((users)=>{
-        if (users) {
-           return  res.status(400).send({err:'user exist'})
-        } else {
-            bcrypt.hash(Password,7,(err,bcrypted)=>{
-                if (bcrypted) {
-                    user.create({
-                        First_name,Last_name,Email,Telephone,Password:bcrypted
-                    }).then((user)=>{
-                        return res.status(201).send(user)
-                    }).catch((err)=>{
-                        return res.status(403).send(err)
-                    })
-                }else{
-                    return res.send(err)
-                 }
-               })
+router.post('/register', (req, res) => {
+    const {
+      First_name,
+      Last_name,
+      Username,
+      Email,
+      Telephone,
+      Password,
+      confirmPass
+    } = req.body;
+  
+    if (!First_name || !Last_name || !Username || !Email || !Telephone || !Password) {
+      return res.status(400).send('A field is empty. Please check all fields.');
+    }
+  
+    if (Password !== confirmPass) {
+      return res.status(400).send('Passwords do not match.');
+    }
+  
+    if (Email.length <= 6) {
+      return res.status(400).send(`Email "${Email}" is shorter than the minimum allowed length (6).`);
+    }
+  
+    if (typeof Telephone !== 'number') {
+      return res.status(400).send('Telephone field should be a number.');
+    }
+  
+    user.findOne({ $or: [{ Username }, { Email }, { Telephone }] }).then((existingUser) => {
+      if (existingUser) {
+        let errorMessage = '';
+        if (existingUser.Username === Username) {
+          errorMessage = 'Username already exists.';
+        } else if (existingUser.Email === Email) {
+          errorMessage = 'Email already exists.';
+        } else if (existingUser.Telephone === Telephone) {
+          errorMessage = 'Telephone number already exists.';
         }
-   })
-   
-})
-router.post("/Login",(req,res)=>{
+        return res.status(400).send({ err: errorMessage });
+      } else {
+        bcrypt.hash(Password, 7, (err, bcrypted) => {
+          if (err) {
+            return res.status(500).send(err);
+          }
+          user.create({
+            First_name,
+            Last_name,
+            Username,
+            Email,
+            Telephone,
+            Password: bcrypted
+          }).then((createdUser) => {
+            return res.status(201).send(createdUser);
+          }).catch((err) => {
+            return res.status(500).send(err);
+          });
+        });
+      }
+    });
+  });
+  router.post("/Login",(req,res)=>{
     const {Email,Password}=req.body;
     if(Email==""||Password==""){
         return res.send({err:'empty field'})

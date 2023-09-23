@@ -4,9 +4,14 @@ const User=new mong.Schema({
     First_name:{
         type:String,
         required:true,
-        unique:true,
+        
     },
     Last_name:{
+        type:String,
+        required:true,
+       
+    },
+    Username:{
         type:String,
         required:true,
         unique:true

@@ -9,12 +9,10 @@ const Maintenance=new mong.Schema({
         type:String,
         required:true
     },
-    scheduleDate:{
+    date:{
         type:Date,
         required:true
     }
 })
 
-
-
-mondule.exports=mong.model('Maintenance',Maintenance)
+module.exports=mong.model('Maintenance',Maintenance)

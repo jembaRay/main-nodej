@@ -41,16 +41,6 @@ router.post('/change', async (req, res) => {
     }
   }
 });
-router.get('/getchange/:val',(req,res)=>{
-let {val}=req.params
-console.log(val);
-    // usage.find().then((f)=>{
-    //     if (f) {
-            
-    //         return res.send({"state":f[0].state})
-    //     }
-    // })
-})
 
 
 module.exports=router

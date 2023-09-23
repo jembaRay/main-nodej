@@ -27,7 +27,7 @@ try {
                                 GenKonId:{genId:creat.id}
                             })
                         }
-                      GenKonn.updateOne({SerialNo:serial},{$set:{inUse:true}},{$new:true}).then((up)=>{
+                      GenKonn.updateOne({SerialNo:serial},{$set:{inUse:true}},{new:true}).then((up)=>{
                         if (up) {
                             res.status(200).send({creat})    
                         }
