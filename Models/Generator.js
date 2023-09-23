@@ -19,7 +19,7 @@ GenKonnectID:{
     ref:'genKon',
     required:true
 },
-status:{
+state:{
     type:Number,
     default:0
 }

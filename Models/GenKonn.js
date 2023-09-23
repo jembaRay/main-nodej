@@ -3,7 +3,8 @@ const mong=require('mongoose')
 const genkon=new mong.Schema({
 SerialNo:{
     type:String,
-    required:true
+    required:true,
+    unique:true
 },
 inUse:{
     type:Boolean,
