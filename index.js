@@ -12,6 +12,7 @@ const genko=require('./Route_controllers/genKon')
 const siadas=require("./Route_controllers/siaDash")
 const sharGen=require('./Route_controllers/shareGen')
 const Maintenance=require('./Route_controllers/maintenance')
+const listing=require('./Route_controllers/listing')
 app.use(parser.urlencoded({extended:true}))
 app.use(parser.json())
 app.use(exp.json())
@@ -31,7 +32,7 @@ app.use('/',user)
 app.use('/',gen)
 app.use('/',sharGen) 
 app.use('/',Maintenance)
-
+app.use('/',listing)
 app.listen(5000,ip,(req,res)=>{
     console.log('listening');
 })
