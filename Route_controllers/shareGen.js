@@ -6,7 +6,7 @@ const User = require('../Models/User');
 router.get('/searchacc',async(req,res)=>{
     const {search}=req.body
 
-    const query=await User.find({Username:{$re}})
+    const query = await User.find({ Username: { $regex: new RegExp(search, 'i') } });
 })
 
 router.post('/share',async(req,res)=>{
