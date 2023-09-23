@@ -16,39 +16,38 @@ const generatorId = req.body.genId;
 const userIdToShareWith = req.body.userId;
  const tokene = req.headers.token;
   const userId = await token.getUserId(tokene);
-Generator.findById(generatorId, (err, generator) => {
-  if (err) {
-    // Handle the error appropriately
-    res.status(500).send({ error: 'Failed to retrieve generator.' });
-  } else if (!generator) {
+Generator.findById(generatorId).then((generator) => {
+   if (!generator) {
     // Generator not found
     res.status(404).send({ error: 'Generator not found.' });
   } else {
     // Check if the user is already shared with
-    const isAlreadyShared = generator.sharedWith.some(user => user.userId === userIdToShareWith);
-
+    const isAlreadyShared = generator.sharedWith.some(user => user.userId == userIdToShareWith);
+console.log(isAlreadyShared);
     if (isAlreadyShared) {
       res.status(400).send({ error: 'Generator is already shared with the user.' });
     } else {
       // Add the user ID to the sharedWith array
       generator.sharedWith.push({ userId: userIdToShareWith });
         User.findByIdAndUpdate(userIdToShareWith,{$set:{Active:true}},{new:true}).then((good)=>{
-            console.log(good);
+            ///console.log(good);
         }).catch((err)=>{
             console.log(err);
         })
       // Save the updated generator
-      generator.save((err) => {
-        if (err) {
-          // Handle the error appropriately
-          res.status(500).send({ error: 'Failed to share generator with the user.' });
-        } else {
+      generator.save().then((save)=>{
+        if (save) {
           res.send({ message: 'Generator shared successfully with the user.' });
         }
-      });
+      })
     }
   }
-});
+}).catch((err)=>{
+  if (err) {
+    // Handle the error appropriately
+    res.status(500).send({ error: 'Failed to retrieve generator.' });
+  } 
+})
 })
 
 module.exports=router

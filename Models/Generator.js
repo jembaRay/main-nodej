@@ -4,7 +4,7 @@ const mong=require('mongoose');
 const Generator=new mong.Schema({
  name:{
     type:String,
-    required:true
+    // required:true
 },
 fuel:{
     type:Number,
@@ -19,7 +19,7 @@ PowerOutPut:{
     required:true
 },
 GenKonnectID:{
-    type:mongoose.Types.ObjectId,
+    type:mong.Types.ObjectId,
     ref:'genKon',
     required:true
 },
@@ -29,7 +29,7 @@ state:{
 },
 sharedWith: [{
     userId:{
-     type: mongoose.Schema.Types.ObjectId, 
+     type: mong.Types.ObjectId, 
      ref: 'User'
     }
      }]

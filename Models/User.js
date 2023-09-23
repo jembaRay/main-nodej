@@ -37,6 +37,11 @@ const User=new mong.Schema({
         type:Boolean,
         required:false,
         default:false
+    },
+    Owner:{ 
+        type:Boolean,
+        required:false,
+        default:false
     }
 },{timestamps:true})
 module.exports=mong.model("User",User)
