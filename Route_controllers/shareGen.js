@@ -2,11 +2,13 @@ const Generator = require('../Models/Generator');
 const router=require('express').Router()
 const token=require('../JWT/jwt_openAI');
 const User = require('../Models/User');
-
+//search bar
 router.get('/searchacc',async(req,res)=>{
     const {search}=req.body
 
-    const query = await User.find({ Username: { $regex: new RegExp(search, 'i') } });
+    const query = await User.find({ First_name: { $regex: new RegExp(search, 'i') } }).select(['First_name','Last_name']);
+
+    res.send(query)
 })
 
 router.post('/share',async(req,res)=>{

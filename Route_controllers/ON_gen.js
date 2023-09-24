@@ -3,6 +3,7 @@ const usage=require('../Models/Usage');
 const userGen = require('../Models/userGen');
 const token=require('../JWT/jwt_openAI');
 const Generator = require('../Models/Generator');
+const GenKonn = require('../Models/GenKonn');
 
 //to on generator you send me generator id and the state
 router.post('/change', async (req, res) => {
@@ -41,6 +42,29 @@ router.post('/change', async (req, res) => {
     }
   }
 });
+router.get('/getchange/:serial', async (req, res) => {
+let serial=req.params.serial
 
+GenKonn.find({SerialNo:serial}).then((found)=>{
+  
+if (found.length>0) {
+  Generator.find({GenKonnectID:found[0].id}).then((foun)=>{
+    console.log(foun);
+    if (foun.length>0) {
+      res.send({'state':foun[0].state})
+    } else {
+      res.send({'state':0})
+    }
+
+  }).catch((err)=>{
+    res.send(err)
+  })
+} else {
+  res.send({"err":`no serial as ${serial}`})
+}
+}).catch((err)=>{
+  res.send(err)
+})
+})
 
 module.exports=router
