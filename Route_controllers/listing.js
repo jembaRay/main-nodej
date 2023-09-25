@@ -9,7 +9,7 @@ router.get('/listgen',async(req,res)=>{
     const tokene = req.headers.token;
     const userId = await token.getUserId(tokene);
 
-    let owngenerators=await  userGen.find({userId:userId}).populate(['GenKonId.genId','userId'])
+    let owngenerators=await  userGen.find({userId:userId}).populate(['GenKonId.genId'])
     let shared=await Generator.find({'sharedWith.userId':userId})
     res.send({'owned':owngenerators,'shared':shared})
 }

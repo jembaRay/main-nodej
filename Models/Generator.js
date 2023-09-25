@@ -4,7 +4,7 @@ const mong=require('mongoose');
 const Generator=new mong.Schema({
  name:{
     type:String,
-    // required:true
+  // required:true
 },
 fuel:{
     type:Number,

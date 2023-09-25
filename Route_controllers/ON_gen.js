@@ -11,7 +11,7 @@ router.post('/change', async (req, res) => {
   const tokene = req.headers.token;
   const userId = await token.getUserId(tokene);
 
-  console.log({ "userId": userId, "genId": genId });
+  console.log({ "userId": userId, "genId": genId ,"state":state});
 
   if (userId === undefined || userId === -1) {
     res.status(401).send({ "err": "You are not authenticated." });
@@ -35,6 +35,8 @@ router.post('/change', async (req, res) => {
           { new: true }
         ).then((upd)=>{
             res.send({upd})
+        }).catch((err)=>{
+          res.send({"err":"did not save i think"})
         })
       }
     } catch (err) {

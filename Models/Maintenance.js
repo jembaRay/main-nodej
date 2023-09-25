@@ -13,6 +13,6 @@ const Maintenance=new mong.Schema({
         type:Date,
         required:true
     }
-})
+},{timeseries:true})
 
 module.exports=mong.model('Maintenance',Maintenance)

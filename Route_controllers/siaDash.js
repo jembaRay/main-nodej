@@ -5,7 +5,7 @@ const userGen = require('../Models/userGen');
 const token=require('../JWT/jwt_openAI')
 
 router.post("/siadash",async(req,res)=>{
-const {serial,fuel,baseTemp,PowerOutPut}=req.body
+const {serial,name,fuel,baseTemp,PowerOutPut}=req.body
 let tokene=req.headers.token
 let  userId=await token.getUserId(tokene)
 
@@ -17,7 +17,7 @@ try {
         if (Kon) {
             GenKonn.find({SerialNo:serial}).then((seen)=>{
                 console.log(seen[0].id);
-                Generator.create({fuel,baseTemp,PowerOutPut,GenKonnectID:seen[0].id})
+                Generator.create({fuel,name,baseTemp,PowerOutPut,GenKonnectID:seen[0].id})
                 .then((creat)=>{
                     if (creat) {
                         if (creat) {

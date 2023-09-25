@@ -32,7 +32,7 @@ router.get('/alluserGen',async(req,res)=>{
 })
 //to add a generatorwhen you already have one and you addd one that does not exist yet
 router.post('/addgen',async (req,res)=>{
-    const {serial,fuel,baseTemp,PowerOutPut}=req.body
+    const {serial,name,fuel,baseTemp,PowerOutPut}=req.body
     let tokene=req.headers.token
     let  userId=await token.getUserId(tokene)
 
@@ -48,7 +48,7 @@ if(found){
         if (Kon[0].inUse==false) {   
         GenKonn.find({SerialNo:serial}).then((seen)=>{
             console.log(seen[0].id);
-            Generator.create({fuel,baseTemp,PowerOutPut,GenKonnectID:seen[0].id})
+            Generator.create({fuel,baseTemp,name,PowerOutPut,GenKonnectID:seen[0].id})
             .then((creat)=>{
                 if (creat) {
                     if (creat) {
