@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose');
+
 const mong=require('mongoose');
 
 const Generator=new mong.Schema({
@@ -20,7 +20,7 @@ PowerOutPut:{
 },
 GenKonnectID:{
     type:mong.Types.ObjectId,
-    ref:'genKon',
+    ref:'GenKonn',
     required:true
 },
 state:{

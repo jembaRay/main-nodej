@@ -46,7 +46,7 @@ router.post('/change', async (req, res) => {
 });
 router.get('/getchange/:serial', async (req, res) => {
 let serial=req.params.serial
-
+console.log(serial);
 GenKonn.find({SerialNo:serial}).then((found)=>{
   
 if (found.length>0) {
