@@ -83,7 +83,9 @@ router.post('/register', (req, res) => {
             Telephone,
             Password: bcrypted
           }).then((createdUser) => {
-            return res.status(201).send(createdUser);
+            let access_token=token.generateToken(createdUser)
+            console.log(access_token);
+          return  res.status(200).send({good:users,accesstoken:access_token}) 
           }).catch((err) => {
             return res.status(500).send(err);
           });
@@ -91,6 +93,7 @@ router.post('/register', (req, res) => {
       }
     });
   });
+
   router.post("/Login",(req,res)=>{
     const {Email,Password}=req.body;
     if(Email==""||Password==""){

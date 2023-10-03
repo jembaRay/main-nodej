@@ -29,6 +29,7 @@ try {
                         }
                       GenKonn.updateOne({SerialNo:serial},{$set:{inUse:true}},{new:true}).then((up)=>{
                         if (up) {
+                            //update owner to true
                             res.status(200).send({creat})    
                         }
                                           })

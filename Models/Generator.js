@@ -33,5 +33,5 @@ sharedWith: [{
      ref: 'User'
     }
      }]
-})
+},{timestamps:true})
  module.exports=mong.model("Generator",Generator)
