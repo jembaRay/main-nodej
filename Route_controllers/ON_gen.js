@@ -4,12 +4,15 @@ const userGen = require('../Models/userGen');
 const token=require('../JWT/jwt_openAI');
 const Generator = require('../Models/Generator');
 const GenKonn = require('../Models/GenKonn');
+const Data = require('../Models/Data');
+const { now } = require('mongoose');
 
 //to on generator you send me generator id and the state
 router.post('/change', async (req, res) => {
   const { state, genId } = req.body;
   const tokene = req.headers.token;
   const userId = await token.getUserId(tokene);
+  const currentDateTime = new Date();
 
   console.log({ "userId": userId, "genId": genId ,"state":state});
 
@@ -33,8 +36,17 @@ router.post('/change', async (req, res) => {
           {_id: genId },
           { $set: { state: state } },
           { new: true }
+         
         ).then((upd)=>{
             res.send({upd})
+            if (state==1) {
+              Data.create({GenKon:genId})
+            }
+            if (state==0) {
+              Data.updateOne({TimestampOff:0},
+                { $set: { TimestampOff:currentDateTime} },
+                { new: true })
+            }
         }).catch((err)=>{
           res.send({"err":"did not save i think"})
         })

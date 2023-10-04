@@ -11,7 +11,6 @@ router.get('/listgen',async(req,res)=>{
     const userId = await token.getUserId(tokene);
       userGen.find({userId:userId}).populate(['GenKonId.genId']).then((log)=>{
         console.log({'log':log[0].GenKonId[0].genId.GenKonnectID});
-
       })
     let owngenerators=await  userGen.find({userId:userId}).populate(['GenKonId.genId'])
     let shared=await Generator.find({'sharedWith.userId':userId})
@@ -21,6 +20,7 @@ router.get('/listgen',async(req,res)=>{
 
 router.get('/serial/:desc',async(req,res)=>{
     let desc=req.params.desc
+    console.log(desc);
 let genK=await GenKonn.find({_id:desc}).select("SerialNo")
 res.send(genK)
 })
