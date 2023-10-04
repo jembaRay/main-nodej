@@ -32,8 +32,11 @@ router.get('/postMon/:serial/:bat/:powe/:fuel',(req,res)=>{
         if(ser.length>0){
             Generator.find({GenKonnectID:ser._id}).then((gen)=>{
                 if(gen.length>0){
-                    Data.find({GenKon:gen_id}).then((gen)=>{
-                        
+                    Data.updateOne({$and:[{GenKon:gen_id},{TimestampOff:0}]},{ $set: { "Data.1.Fuel": fuel,
+                     "Data.1.Temperature": temp,
+                      "Data.1.batteryVoltage": bat, 
+                      "Data.1.Current": powe }}).then((dat)=>{
+                        dat
                     })
                 }
             })
