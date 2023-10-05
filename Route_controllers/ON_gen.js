@@ -13,6 +13,7 @@ router.post('/change', async (req, res) => {
   const tokene = req.headers.token;
   const userId = await token.getUserId(tokene);
   const currentDateTime = new Date();
+  console.log(new Date().toISOString());
 
   console.log({ "userId": userId, "genId": genId ,"state":state});
 
@@ -43,8 +44,8 @@ router.post('/change', async (req, res) => {
               Data.create({GenKon:genId})
             }
             if (state==0) {
-              Data.updateOne({TimestampOff:0},
-                { $set: { TimestampOff:currentDateTime} },
+              Data.updateOne({TimestampOff:"0"},
+                { $set: { TimestampOff:`${new Date().toISOString()}`} },
                 { new: true })
             }
         }).catch((err)=>{

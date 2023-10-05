@@ -2,7 +2,8 @@ const router=require('express').Router();
 const GenKonn = require('../Models/GenKonn');
 const Generator = require('../Models/Generator');
 const userGen = require('../Models/userGen');
-const token=require('../JWT/jwt_openAI')
+const token=require('../JWT/jwt_openAI');
+const User = require('../Models/User');
 
 router.post("/siadash",async(req,res)=>{
 const {serial,name,fuel,baseTemp,PowerOutPut}=req.body
@@ -15,8 +16,11 @@ if (serial==""||serial.length<6) {
 try {
     GenKonn.find({SerialNo:serial}).then((Kon)=>{
         if (Kon) {
-            GenKonn.find({SerialNo:serial}).then((seen)=>{
-                console.log(seen[0].id);
+        GenKonn.find({$and:[{SerialNo:serial}/*{inUse:false}*/]}).then((seen)=>{
+            if (seen[0].inUse==true) {
+                res.send({"error":"serial already in use"})
+            }else{
+                // console.log({seen:seen[0].id});
                 Generator.create({fuel,name,baseTemp,PowerOutPut,GenKonnectID:seen[0].id})
                 .then((creat)=>{
                     if (creat) {
@@ -30,7 +34,9 @@ try {
                       GenKonn.updateOne({SerialNo:serial},{$set:{inUse:true}},{new:true}).then((up)=>{
                         if (up) {
                             //update owner to true
-                            res.status(200).send({creat})    
+                           User.updateOne({id:userId},{$set:{owner:true}}).then(()=>{
+                            res.status(200).send(creat)  
+                           })                             
                         }
                                           })
                     } 
@@ -38,8 +44,9 @@ try {
                     res.send(error)
                 })
             
-
+            }
             })
+        
         } else {
             res.send({"error":"no serial number as such or already in use"})
             
@@ -50,6 +57,7 @@ try {
 } catch (error) {
     res.send(error)
 }
+
 })
 
 module.exports=router

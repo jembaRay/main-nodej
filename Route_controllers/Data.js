@@ -7,10 +7,18 @@ const GenKonn = require('../Models/GenKonn');
 const Data = require('../Models/Data');
 
 // monitoring
-router.get('/Monitor',(req,res)=>{
-    const genId=req.body.genId
+router.get('/Monitor/:genId',(req,res)=>{
+    const genId=req.params
 Data.find({GenKon:genId}).then((gen)=>{
 res.send(gen[gen.length].Data[1])
+}).catch((error)=>{
+res.send((error))
+})
+})
+router.get('/Monit/:genId',(req,res)=>{
+    const genId=req.params
+Data.find({}).then((gen)=>{
+res.send(gen)
 }).catch((error)=>{
 res.send((error))
 })
@@ -26,18 +34,27 @@ res.send((error))
 })
 
 //post data from esp
-router.get('/postMon/:serial/:bat/:powe/:fuel',(req,res)=>{
+router.get('/postMon/:serial/:bat/:current/:powe/:fuel',(req,res)=>{
     const {bat,powe,fuel,serial}=req.params
+    console.log(req.params);
     GenKonn.findOne({SerialNo:serial}).then((ser)=>{
         if(ser.length>0){
             Generator.find({GenKonnectID:ser._id}).then((gen)=>{
                 if(gen.length>0){
-                    Data.updateOne({$and:[{GenKon:gen_id},{TimestampOff:0}]},{ $set: { "Data.1.Fuel": fuel,
-                     "Data.1.Temperature": temp,
-                      "Data.1.batteryVoltage": bat, 
-                      "Data.1.Current": powe }}).then((dat)=>{
-                        dat
-                    })
+                    Data.updateOne(
+                        { $and: [{ GenKon: gen_id }, { TimestampOff: "0" }] },
+                        {
+                          $set: {
+                            "Datas.[1].Fuel": fuel,
+                            "Data.[1].Temperature": temp,
+                            "Data.[1].batteryVoltage": bat,
+                            "Data.[1].batteryCurrent": current,
+                            "Data.[1].Current": powe
+                          }
+                        },{new:true}
+                      ).then((dat) => {
+                        res.send({ Data: dat });
+                      });
                 }
             })
         }

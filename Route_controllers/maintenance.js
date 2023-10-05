@@ -3,8 +3,8 @@ const Maintenance=require('../Models/Maintenance')
 //create a maintenance 
 router.post('/maintenance',(req,res)=>{
 const {genId,Motif,date}=req.body
-
-if (genId==''||desc==''||date==''){
+console.log(req.body);
+if (genId==''||Motif==''||date==''){
     res.send({'err':'empty fields'})
 }
 
@@ -16,14 +16,14 @@ if (main) {
     res.send({'error creating':err})
 })
 })
-router.get('/listmaintenance',(req,res)=>{
-    const {genId}=req.body
-Maintenance.find({genId}).then((main)=>{
-    if (main.lenght>0) {
+router.get('/listmaintenance/:genId/:date',(req,res)=>{
+    const {genId,date}=req.params
+    console.log(genId,date);
+Maintenance.find({genId,date}).then((main)=>{
+    console.log(main);
+     
         res.status(200).send(main)
-    }else{
-        res.status(404).send('No maintenance here')
-    }
+    
 })
 })    
 module.exports=router
