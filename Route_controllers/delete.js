@@ -23,15 +23,15 @@ router.delete('/delUser',(req,res)=>{
 router.delete('/delgen/:genId',(req,res)=>{
     const {genId}=req.params
     console.log(req.params);
-    // Generator.find({id:genId}).then((gen)=>{
-    //     const genKonnectID = gen[0].GenKonnectID
-    //     GenKonn.updateOne({id:genKonnectID},{$set:{inUse:false}}).then(()=>{
-    //     Generator.deleteOne({id:genId}).then(()=>{
-    //     userGen.deleteOne({"GenKonId.genId":genId}).then(()=>{
-    //         res.send("Generator deleted succesfully").status(200)
-    //     })
-    //         })
-    //     })
-    // })
+    Generator.find({id:genId}).then((gen)=>{
+        const genKonnectID = gen[0].GenKonnectID
+        GenKonn.updateOne({id:genKonnectID},{$set:{inUse:false}}).then(()=>{
+        Generator.deleteOne({id:genId}).then(()=>{
+        userGen.deleteOne({"GenKonId.genId":genId}).then(()=>{
+            res.send("Generator deleted succesfully").status(200)
+        })
+            })
+        })
+    })
 })
 module.exports=router;

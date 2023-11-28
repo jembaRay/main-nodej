@@ -15,7 +15,7 @@ const DataSchema = new mongoose.Schema({
       Current: { type: Number, default: 0 }
     }
   ],
-  TimestampOff: { type: String, default: "0" }
+  TimestampOff: { type: Date, default: "0" }
 }, { timestamps: true });
 
 DataSchema.pre('save', function(next) {
