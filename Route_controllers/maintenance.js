@@ -21,9 +21,7 @@ router.get('/listmaintenance/:genId/:date',(req,res)=>{
     console.log(genId,date);
 Maintenance.find({genId,date}).then((main)=>{
     console.log(main);
-     
         res.status(200).send(main)
-    
 })
 })    
 module.exports=router
