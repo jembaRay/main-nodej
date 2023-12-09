@@ -15,7 +15,7 @@ router.post('/change', async (req, res) => {
   const currentDateTime = new Date();
   console.log(new Date().toISOString());
 
-  console.log({ "userId": userId, "genId": genId ,"state":state});
+   console.log({ "userId": userId, "genId": genId ,"state":state});
 
   if (userId === undefined || userId === -1) {
     res.status(401).send({ "err": "You are not authenticated." });
@@ -28,7 +28,7 @@ router.post('/change', async (req, res) => {
         ]
       });
 
-      console.log(foundDocuments);
+       console.log(foundDocuments);
 
       if (foundDocuments.length === 0) {
         res.status(404).send({ "err": "Document not found." });
@@ -64,7 +64,7 @@ GenKonn.find({SerialNo:serial}).then((found)=>{
   
 if (found.length>0) {
   Generator.find({GenKonnectID:found[0].id}).then((foun)=>{
-    console.log(foun);
+    //console.log(foun);
     if (foun.length>0) {
       res.send({'state':foun[0].state})
     } else {
