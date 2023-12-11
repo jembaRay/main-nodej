@@ -26,11 +26,17 @@ res.send((error))
 // report
 router.get('/getreport',(req,res)=>{
     const genId=req.body.genId
-Data.find({GenKon:genId}).then((gen)=>{
-res.send(gen)
-}).catch((error)=>{
-res.send((error))
-})
+    console.log(genId);
+    if (genId!==undefined) {
+      Data.find({GenKon:genId}).then((gen)=>{
+        res.send(gen)
+        }).catch((error)=>{
+        res.send((error))
+        })
+    }else{
+      res.send("no genid")
+    }
+
 })
 
 //post data from esp
